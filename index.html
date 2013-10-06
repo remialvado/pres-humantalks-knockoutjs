@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Knockout JS - Human Talks Grenoble - Rémi Alvado</title>
+
+		<meta name="description" content="Knockout JS - Human Talks Grenoble - Rémi Alvado">
+		<meta name="author" content="Rémi Alvado">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.min.css">
+		<link rel="stylesheet" href="css/theme/sky.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+                <link rel="stylesheet" href="lib/css/piechart.css">
+                <link rel="stylesheet" href="css/custom.css">
+
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+                    document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+	<body>
+            <div class="reveal">        
+                <!-- Any section element inside of this container is displayed as a slide -->
+                <div class="slides">
+                    <section id="introduction">
+                        <h3>De website à webapp</h3>
+                        <h1>Knockout JS</h1>
+                        <p>
+                            <small><a href="mailto:remi.alvado@gmail.com">Rémi Alvado</a> / <a href="http://twitter.com/remialvado">@remialvado</a> / <a href="http://www.shoppingadventure.fr/">Shopping Adventure</a></small>
+                        </p>
+                    </section>
+
+                    <section id="principes" data-auto-start>
+                        <p>Un principe fort : <span class="fragment highlight-red">MVVM</span></p>
+                        <ol>
+                            <li class="fragment" data-next-fragment="500">Model : la représentation de vos données <span class="fragment highlight-blue" data-next-fragment="500">=> des POJOs sous stéroïde</span></li>
+                            <li class="fragment" data-next-fragment="500">View : un template HTML directement dans la page.</li>
+                            <li class="fragment" data-next-fragment="500">View-Model : la glue permettant un lien bi-directionnel entre les deux.</li>
+                        </ol>
+                    </section>
+
+                    <section id="keywords" data-auto-start>
+                        <h3>Quelques mot-clés / notions</h3>
+                        <ol>
+                            <li class="fragment" data-next-fragment="500">Observable<span class="fragment" data-next-fragment="2000"> : un élément de model ou de vue que l'on peut observer</span></li>
+                            <li class="fragment" data-next-fragment="500">Computed<span class="fragment" data-next-fragment="2000"> : un élément de model ou de vue qui dépend d'un autre élement</span></li>
+                            <li class="fragment" data-next-fragment="500">Binding<span class="fragment" data-next-fragment="2000"> : une action à déclencher suite à un évènement</span></li>
+                            <li class="fragment" data-next-fragment="500">
+                                <span class="fragment">
+                                    <span class="fragment wrong" data-next-fragment="500">et pas mal d'autres...</span>
+                                </span>
+                                <span class="fragment" data-next-fragment="500">
+                                    ET C'EST TOUT !!!
+                                </span>
+                            </li>
+                        </ol>
+                    </section>
+
+                    <section id="test"></section>
+
+                    <section id="model" data-state="model" data-auto-start>
+                        <p>Principale force : <span class="fragment highlight-red" data-next-fragment="500">Gestion des dépendances</span></p>
+                        <div id="model-1" class="bloc fragment" style="position: absolute; top: 100px; left:  20px"  data-next-fragment="500">Account Balance</div>
+                        <div id="model-2" class="bloc fragment" style="position: absolute; top: 100px; left:  420px" data-next-fragment="500">Status</div>
+                        <div id="model-3" class="bloc fragment" style="position: absolute; top: 100px; left:  720px" data-next-fragment="500">Message</div>
+                        <div id="model-4" class="bloc fragment" style="position: absolute; top: 200px; left:  720px">Alerte</div>
+                        <pre class="fragment fade-in" style="margin-top: 250px;"><code class="language-js"># Model/account.js
+define(["knockout", "sms-service"], function(ko, sms) {
+    return function account(name, balance) {
+        var self = this;
+        self.name    = ko.observable(name);
+        self.balance = ko.observable(balance);
+        self.status  = ko.computed(function() { 
+            return self.balance() >= O ? "positive" : "negative";
+        });
+        self.message = ko.computed(function() { 
+            return self.status() === "positive" ? 
+                "vous avez encore de l'argent" : 
+                "arrêtez de dépenser autant !!";
+        });
+        self.alerte = ko.computed(function() {
+            if (self.status() === "negative") 
+                sms.send("Alerte !", "Account balance : " + self.balance());
+        });
+    }
+}</code></pre>
+                    </section>
+
+                    <section id="view" data-state="view" data-auto-start>
+                        <h3>Template</h3>
+                        <pre class="fragment fade-in"><code class="language-html"># View/account.html
+&lt;html>
+  &lt;head>
+    &lt;script src="knockout.js">&lt;/script>
+    &lt;script src="account.js">&lt;/script>
+  &lt;/head>
+  &lt;body>
+    ...
+    &lt;label>Balance : 
+      &lt;input data-binding="{value: balance, valueUpdate: 'afterkeydown'}" />
+    &lt;/label>
+    &lt;p>
+      Status : &lt;span>&lt;% status %>&lt;/span>
+    &lt;/p>
+    &lt;p>
+      Message : &lt;span data-binding="{text: message}">&lt;/span>
+    &lt;/p>
+    ...
+  &lt;/body>
+&lt;/html>
+</code></pre>
+                    </section>
+
+                    <section id="view-model" data-state="view-model" data-auto-start>
+                        <h3>View Model</h3>
+                        <pre class="fragment fade-in"><code class="language-html"># Controller/bank.html
+define(["knockout", "Model/account"],
+    function(ko, account) {
+        ko.applyBindings(
+            new account("Rémi Alvado", 0),
+            document.querySelector("body");
+        );
+    });
+</code></pre>
+                    </section>
+                        
+                    <section id="questions">
+                        <h2>Questions ?</h2>
+                    </section>
+                    
+                </div>
+            </div>
+            
+            <a href="https://github.com/remialvado/pres-jpds-shoppingadventure"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub"></a>
+            
+            <script src="lib/js/head.min.js"></script>
+            <script src="js/reveal.min.js"></script>
+            <script src="lib/js/jquery.min.js"></script>
+            <script src="lib/js/piechart.js"></script>
+            <script src='lib/js/jsPlumb-1.5.2-min.js'></script>
+
+            <script>
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+                        
+                        Reveal.addEventListener('fragmentshown', function(ev) {
+                            var current = ev.fragment;
+
+                            // activate next fragment automatically
+                            var autoFragment = current.getAttribute("data-next-fragment");
+                            if (autoFragment) {
+                                setTimeout(Reveal.nextFragment, autoFragment);
+                            }    
+                        });
+                    
+                        Reveal.addEventListener('slidechanged', function(ev) {
+                            var current = ev.currentSlide;
+
+                            // activate next fragment automatically
+                            if (current.hasAttribute("data-auto-start")) {
+                                setTimeout(Reveal.nextFragment, current.getAttribute("data-auto-start") || 1000);
+                            }    
+                        });
+                        
+                        var connect = function(source, target, label) {
+                            jsPlumb.importDefaults({
+                                DragOptions : { cursor: "pointer", zIndex:2000 },
+                                HoverClass:"connector-hover"
+                            });
+                            var stateMachineConnector = {				
+                                connector:"StateMachine",
+                                paintStyle:{lineWidth:3,strokeStyle:"#056"},
+                                hoverPaintStyle:{strokeStyle:"#dbe300"},
+                                endpoint:"Blank",
+                                anchor:"Continuous",
+                                overlays:[ ["PlainArrow", {location:1, width:15, length:12} ]]
+                            };
+                            jsPlumb.connect({
+                                source: source, 
+                                target: target,
+                                label: label
+                            }, stateMachineConnector);
+                        };
+                        
+                        Reveal.addEventListener('model', function(ev) {
+                            setTimeout(function() {connect("model-1", "model-2");}, 4000);
+                            setTimeout(function() {connect("model-2", "model-3");}, 5000);
+                            setTimeout(function() {connect("model-2", "model-4");}, 5000);
+                        }, false );
+
+		</script>
+	</body>
+</html>
