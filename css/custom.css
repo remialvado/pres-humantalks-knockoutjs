@@ -41,4 +41,5 @@ del::after{
 }
 .reveal .slides section .visible .fragment.visible.wrong {
     text-decoration: line-through;
+    
 }    

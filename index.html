@@ -46,18 +46,18 @@
                     <section id="principes" data-auto-start>
                         <p>Un principe fort : <span class="fragment highlight-red">MVVM</span></p>
                         <ol>
-                            <li class="fragment" data-next-fragment="500">Model : la représentation de vos données <span class="fragment highlight-blue" data-next-fragment="500">=> des POJOs sous stéroïde</span></li>
-                            <li class="fragment" data-next-fragment="500">View : un template HTML directement dans la page.</li>
-                            <li class="fragment" data-next-fragment="500">View-Model : la glue permettant un lien bi-directionnel entre les deux.</li>
+                            <li class="fragment" data-next-fragment="500">Model : la représentation de vos données <span class="fragment highlight-blue" data-next-fragment="3000">=> des POJOs sous stéroïde</span></li>
+                            <li class="fragment" data-next-fragment="3000">View : un template HTML directement dans la page.</li>
+                            <li class="fragment">View-Model : la glue permettant un lien bi-directionnel entre les deux.</li>
                         </ol>
                     </section>
 
                     <section id="keywords" data-auto-start>
                         <h3>Quelques mot-clés / notions</h3>
                         <ol>
-                            <li class="fragment" data-next-fragment="500">Observable<span class="fragment" data-next-fragment="2000"> : un élément de model ou de vue que l'on peut observer</span></li>
-                            <li class="fragment" data-next-fragment="500">Computed<span class="fragment" data-next-fragment="2000"> : un élément de model ou de vue qui dépend d'un autre élement</span></li>
-                            <li class="fragment" data-next-fragment="500">Binding<span class="fragment" data-next-fragment="2000"> : une action à déclencher suite à un évènement</span></li>
+                            <li class="fragment" data-next-fragment="500">Observable<span class="fragment" data-next-fragment="5000"> : un élément de model ou de vue que l'on peut observer</span></li>
+                            <li class="fragment" data-next-fragment="500">Computed<span class="fragment" data-next-fragment="5000"> : un élément de model ou de vue qui est calculé en fonction d'un autre élement</span></li>
+                            <li class="fragment" data-next-fragment="500">Binding<span class="fragment" data-next-fragment="5000"> : une action à déclencher suite à un évènement</span></li>
                             <li class="fragment" data-next-fragment="500">
                                 <span class="fragment">
                                     <span class="fragment wrong" data-next-fragment="500">et pas mal d'autres...</span>
@@ -68,8 +68,6 @@
                             </li>
                         </ol>
                     </section>
-
-                    <section id="test"></section>
 
                     <section id="model" data-state="model" data-auto-start>
                         <p>Principale force : <span class="fragment highlight-red" data-next-fragment="500">Gestion des dépendances</span></p>
@@ -124,6 +122,15 @@ define(["knockout", "sms-service"], function(ko, sms) {
 </code></pre>
                     </section>
 
+                    <section id="bindings" data-state="view" data-auto-start>
+                        <h3>Bindings</h3>
+                        <ol>
+                            <li class="fragment" data-next-fragment="100"><span class="fragment highlight-blue">Text</span> : visible, text, html, css, style, ...</li>
+                            <li class="fragment" data-next-fragment="100"><span class="fragment highlight-blue">Control flow</span> : foreach, if, with, ...</li>
+                            <li class="fragment" data-next-fragment="100"><span class="fragment highlight-blue">Forms</span> : value, submit, event, disable, click, checked, ...</li>
+                        </ol>
+                    </section>
+
                     <section id="view-model" data-state="view-model" data-auto-start>
                         <h3>View Model</h3>
                         <pre class="fragment fade-in"><code class="language-html"># Controller/bank.html
@@ -131,10 +138,41 @@ define(["knockout", "Model/account"],
     function(ko, account) {
         ko.applyBindings(
             new account("Rémi Alvado", 0),
-            document.querySelector("body");
+            document.querySelector("body")
         );
     });
 </code></pre>
+                    </section>
+
+                    <section id="test" data-auto-start>
+                        <h3 class="fragment" data-next-fragment="2000">Tests</h3>
+                        <ol>
+                            <li class="fragment" data-next-fragment="100"><span class="fragment highlight-blue">Unitaires</span> : sur le model avec qunit, jasmine via zombie, nodejs, ...</li>
+                            <li class="fragment" data-next-fragment="100"><span class="fragment highlight-blue">Fonctionnels</span> : sur la vue avec jasmine via selenium, zombie, phantom, ...</li>
+                        </ol>
+                    </section>
+
+                    <section id="learning-curve" data-auto-start>
+                        <h3>80 / 20</h3>
+                        <p>80% de Knockout en 7 minutes !</p>
+                    </section>
+
+                    <section id="learning-curve-next" data-auto-start>
+                        <h3>Les 20% restants pour devenir expert</h3>
+                        <ol>
+                            <li class="fragment">Debugger knockoutjs : chrome extension ou json export</li>
+                            <li class="fragment">Créer des bindings</li>
+                            <li class="fragment">Etendre l'interface Observable</li>
+                        </ol>
+                    </section>
+
+                    <section id="related-tools" data-auto-start>
+                        <h3 class="fragment" data-next-fragment="2000">Outils liés</h3>
+                        <ol>
+                            <li class="fragment" data-next-fragment="100"><span class="fragment highlight-blue" data-next-fragment="2000">Dépendances</span> : requirejs</li>
+                            <li class="fragment" data-next-fragment="100"><span class="fragment highlight-blue" data-next-fragment="2000">Routing</span> : sammyjs</li>
+                            <li class="fragment" data-next-fragment="100"><span class="fragment highlight-blue" data-next-fragment="2000">Web UI</span> : jquery, bootstrap, kendo, ...</li>
+                        </ol>
                     </section>
                         
                     <section id="questions">
